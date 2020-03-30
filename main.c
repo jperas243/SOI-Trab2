@@ -66,7 +66,7 @@ void printQueue(queue_t *queue)
 {
     if(empty(queue))
     {
-        printf("A queue está vazia!");
+        printf("Queue is empty!");
     }
     else
     {
@@ -77,6 +77,87 @@ void printQueue(queue_t *queue)
         
     }
 }
+
+typedef struct process
+{
+    int PID, inicial_time, *run, *blocked;
+}process_t;
+process_t *create_process(int sz);
+process_t *insert_process(int beg, int end, int queues, int arr[]);
+int find_PID(int PID, process_t *process_arr[], int n_process);
+
+process_t *create_process(int sz) //Bob
+{
+    process_t *process_v = malloc(sizeof(process_t));
+    process_v->inicial_time = 0;
+    process_v->run = malloc(sz * sizeof(int));
+    process_v->blocked = malloc(sz * sizeof(int));
+
+    return process_v;
+}
+
+process_t *insert_process(int beg, int end, int queues, int arr[])
+{
+    process_t *process_v;
+    if(queues % 2 == 0)
+    {
+        process_v = create_process(3);   
+    }
+    else
+    {
+        process_v = create_process(2)
+    }
+
+    int p_run = 0, p_blocked = 0, count = 0;
+    
+    for (int i = beg; i <= end; ++i)
+	{
+		if (arr[i] > 99)
+			process_v->PID = arr[beg];
+
+		else if (count == 1)
+			process_v->inicial_time = arr[beg + 1];
+
+		else if (count%2 == 0)
+		{
+			process_v->run[p_run] = arr[i];
+			p_run++;
+		}
+
+		else if(count%2 != 0)
+		{
+			process_v->blocked[p_blocked] = arr[i];
+			p_blocked++;
+		}
+
+		else if (arr[i] > 99)
+			process_v->PID = arr[i];
+
+		count++;
+	}
+    return process_v;
+}
+
+int find_PID(int PID, process_t *process_arr[], int n_process)
+{
+    for(int i = 0; i < n_process; i++)
+    {
+        if(process_arr[i]->PID == PID)
+        {
+            return i;
+        }
+    }
+    return -1;
+    printf("PID not found!")
+}
+
+
+
+
+
+
+
+
 
 int main()
 {   
