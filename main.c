@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define SIZE 50
+#define SZ 50
 #define QUANTUM 3
 
 typedef struct queue //Makiko
@@ -61,17 +61,24 @@ int get (queue_t *queue) //Get primeiro elemento, o de baixo
     return temp;
 }
  
-
+void printQueue(queue_t *queue)
+{
+    if(empty(queue))
+    {
+        printf("A queue está vazia!");
+    }
+    else
+    {
+        for (int i = 0; i < queue->final_pos; i++)
+        {
+            printf("%d ", queue->array[i]);
+        }
+        
+    }
+}
 
 int main()
-{
-
-
-    /* queue_t *ready = create_queue(SIZE);     //Queue para o estado READY
-    queue_t *run = create_queue(SIZE);       //Queue para o estado RUN
-    queue_t *blocked = create_queue(SIZE);   //Queue para o estado BLOCKED
-    */
-      
+{   
 
     return 0;
 }
