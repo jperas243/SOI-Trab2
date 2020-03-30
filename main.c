@@ -13,6 +13,7 @@ void insert (queue_t *queue, int element);
 bool full (queue_t *queue);
 bool empty (queue_t *queue);
 int get (queue_t *queue);
+void printQueue(queue_t *queue);
 
 queue_t *create_queue (int sz) //Bob
 {
