@@ -203,7 +203,7 @@ void fcfs(int n_process, process_t *process_arr[])
         int line, size_run, size_blocked;
         for (int j = 0; j < n_process; j++)
         {
-            if(process_arr[j]->inicial_time == i)
+            if(process_arr[j]->inicial_time == i)  //Add processes to READY
             {
                 insert(ready, process_arr[j]->PID);
             }
@@ -219,8 +219,7 @@ void fcfs(int n_process, process_t *process_arr[])
         }
         else
         {
-            printf("%d\n", process_arr[line]->blocked[0]);
-            printf("%d\n", process_arr[line]->blocked[1]);
+            
             if(process_arr[line]->run[0] == 0 && process_arr[line]->blocked[0] == 0)
             {
                 get(run);
