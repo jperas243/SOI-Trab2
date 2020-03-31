@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #define SZ 101
 #define QUANTUM 3
+#define FNAME "input1.txt"
 
 typedef struct queue //Makiko
 {
@@ -199,7 +200,7 @@ void fcfs(int n_process, process_t *process_arr[])
 
     for (int i = 0; i < 60; i++) //Instantes
     {
-        printf("\n PID: %d | Run0:%d Run1: %d | Blocked0: %d Blocked1: %d\n", process_arr[1]->PID, process_arr[1]->run[0], process_arr[1]->run[1], process_arr[1]->blocked[0], process_arr[1]->blocked[1]);
+        printf("\n PID: %d | Run0:%d Run1: %d | Blocked0: %d Blocked1: %d\n", process_arr[0]->PID, process_arr[0]->run[0], process_arr[0]->run[1], process_arr[0]->blocked[0], process_arr[0]->blocked[1]);
         int line, size_run, size_blocked;
         for (int j = 0; j < n_process; j++)
         {
@@ -272,8 +273,7 @@ void fcfs(int n_process, process_t *process_arr[])
 int main()
 {
 
-
-    FILE *fp = fopen("input3.txt", "r");
+    FILE *fp = fopen(FNAME, "r");
 
 	process_t *process_arr [SZ];
 	int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
