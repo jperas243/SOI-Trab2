@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define SZ 50
+#define SZ 101
 #define QUANTUM 3
 
 typedef struct queue //Makiko
@@ -14,6 +14,7 @@ bool full (queue_t *queue);
 bool empty (queue_t *queue);
 int get (queue_t *queue);
 void printQueue(queue_t *queue);
+int top(queue_t *queue);
 
 queue_t *create_queue (int sz) //Bob
 {
@@ -66,7 +67,7 @@ void printQueue(queue_t *queue)
 {
     if(empty(queue))
     {
-        printf("Queue is empty!");
+        printf("Empty!");
     }
     else
     {
@@ -78,6 +79,12 @@ void printQueue(queue_t *queue)
     }
 }
 
+int top(queue_t *queue)
+{
+    return queue->array[queue->final_pos - 1];
+}
+
+
 typedef struct process
 {
     int PID, inicial_time, *run, *blocked;
@@ -85,6 +92,10 @@ typedef struct process
 process_t *create_process(int sz);
 process_t *insert_process(int beg, int end, int queues, int arr[]);
 int find_PID(int PID, process_t *process_arr[], int n_process);
+void update_run(int n_process, process_t *process_arr[]);
+void update_blocked(int n_process, process_t *process_arr[]);
+void update_index_run(int n_process, process_t *process_arr[], int size);
+void update_index_blocked(int n_process, process_t *process_arr[], int size);
 
 process_t *create_process(int sz) //Bob
 {
@@ -98,15 +109,7 @@ process_t *create_process(int sz) //Bob
 
 process_t *insert_process(int beg, int end, int queues, int arr[])
 {
-    process_t *process_v;
-    if(queues % 2 == 0)
-    {
-        process_v = create_process(3);   
-    }
-    else
-    {
-        process_v = create_process(2)
-    }
+    process_t *process_v = create_process(SZ);
 
     int p_run = 0, p_blocked = 0, count = 0;
     
@@ -148,7 +151,118 @@ int find_PID(int PID, process_t *process_arr[], int n_process)
         }
     }
     return -1;
-    printf("PID not found!")
+    printf("PID not found!");
+}
+
+void update_run(int n_process, process_t *process_arr[])
+{
+    process_arr[n_process]->run[0]--;
+}
+
+void update_blocked(int n_process, process_t *process_arr[])
+{
+    process_arr[n_process]->blocked[0]--;
+}
+
+void update_index_run(int n_process, process_t *process_arr[], int size)
+{
+    for (int i = 0; i < size; ++i)
+    {
+        process_arr[n_process] -> run[i] = process_arr[n_process] -> run[i+1];
+        if(process_arr[n_process] -> run[i] > 1000)
+        {
+            process_arr[n_process] -> run[i] = 0;
+        }
+    }
+    
+}
+
+void update_index_blocked(int n_process, process_t *process_arr[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        process_arr[n_process] -> blocked[i] = process_arr[n_process] -> blocked[i+1];
+        if(process_arr[n_process] -> blocked[i] > 1000)
+        {
+            process_arr[n_process] -> blocked[i] = 0;
+        }
+    }    
+}
+
+void fcfs(int n_process, process_t *process_arr[])
+{
+    queue_t *ready = create_queue(SZ); 
+    queue_t *run = create_queue(SZ);
+    queue_t *blocked = create_queue(SZ);
+    
+    
+
+    for (int i = 0; i < 60; i++) //Instantes
+    {
+        printf("\n PID: %d | Run0:%d Run1: %d | Blocked0: %d Blocked1: %d\n", process_arr[1]->PID, process_arr[1]->run[0], process_arr[1]->run[1], process_arr[1]->blocked[0], process_arr[1]->blocked[1]);
+        int line, size_run, size_blocked;
+        for (int j = 0; j < n_process; j++)
+        {
+            if(process_arr[j]->inicial_time == i)
+            {
+                insert(ready, process_arr[j]->PID);
+            }
+        }
+
+        if(empty(run) && empty(blocked))
+        {
+            insert(run, get(ready));
+            line = find_PID(top(run), process_arr, n_process);
+            update_run(line,process_arr);
+            size_run = 2; //Tamanho do RUN
+            size_blocked = 2;
+        }
+        else
+        {
+            printf("%d\n", process_arr[line]->blocked[0]);
+            printf("%d\n", process_arr[line]->blocked[1]);
+            if(process_arr[line]->run[0] == 0 && process_arr[line]->blocked[0] == 0)
+            {
+                get(run);
+                insert(run, get(ready));
+                line = find_PID(top(run), process_arr, n_process);
+            }
+            else if (process_arr[line]->run[0] == 0 && !empty(run))
+            {
+                insert(blocked,get(run));
+                update_blocked(line,process_arr);
+                update_index_run(line,process_arr,size_run);
+            }
+            else if (process_arr[line]->blocked[0] == 0  && !empty(blocked))
+            {
+                insert(run, get(blocked));
+                update_run(line,process_arr);
+                update_index_blocked(line,process_arr,size_blocked);
+            }
+            else if(process_arr[line]->run[0] != 0 && !empty(run)) 
+            {
+                update_run(line, process_arr);
+            }
+
+            else if (process_arr[line]->blocked[0] != 0 && !empty(blocked))
+            {
+                update_blocked(line, process_arr);
+            }
+        }
+    
+    
+        if(empty(ready) && empty(run) && empty(blocked))
+        {
+            return;
+        }
+
+        printf("Instante: %d || Ready:  ", i); printQueue(ready);
+        printf("  || Run:  "); printQueue(run);
+        printf("  || Blocked:  "); printQueue(blocked);
+        printf("\n");
+    }
+
+
 }
 
 
@@ -156,11 +270,37 @@ int find_PID(int PID, process_t *process_arr[], int n_process)
 
 
 
-
-
-
 int main()
-{   
+{
+
+
+    FILE *fp = fopen("input3.txt", "r");
+
+	process_t *process_arr [SZ];
+	int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
+
+	while(fscanf(fp, "%d", &inteiro) != EOF)
+	{
+		arr[comprimento] = inteiro;
+		comprimento++;
+
+	}
+
+	for (int j = 0; j < comprimento; ++j)
+	{
+		if(arr[j + 1] >= 100 || arr[j + 1] == EOF)
+		{
+			process_arr[n_processo] = insert_process(ini, j, n_processo, arr);
+			ini = j + 1;
+			n_processo++;
+		}
+	}
+    
+	fcfs(n_processo, process_arr);
+    
+    
+
+    fclose(fp);
 
     return 0;
 }
