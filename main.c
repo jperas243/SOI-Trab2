@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #define SZ 101
 #define QUANTUM 3
-#define FNAME "input1.txt"
+#define FNAME "input3.txt"
 
 typedef struct queue //Makiko
 {
@@ -198,9 +198,9 @@ void fcfs(int n_process, process_t *process_arr[])
     
     
 
-    for (int i = 0; i < 60; i++) //Instantes
+    for (int i = 0; i < 65; i++) //Instantes
     {
-        printf("\n PID: %d | Run0:%d Run1: %d | Blocked0: %d Blocked1: %d\n", process_arr[0]->PID, process_arr[0]->run[0], process_arr[0]->run[1], process_arr[0]->blocked[0], process_arr[0]->blocked[1]);
+        //printf("\n PID: %d | Run0:%d Run1: %d | Blocked0: %d Blocked1: %d\n", process_arr[0]->PID, process_arr[0]->run[0], process_arr[0]->run[1], process_arr[0]->blocked[0], process_arr[0]->blocked[1]);
         int line, size_run, size_blocked;
         for (int j = 0; j < n_process; j++)
         {
@@ -226,8 +226,9 @@ void fcfs(int n_process, process_t *process_arr[])
                 get(run);
                 insert(run, get(ready));
                 line = find_PID(top(run), process_arr, n_process);
+                update_run(line,process_arr);
             }
-            else if (process_arr[line]->run[0] == 0 && !empty(run))
+            else if ((process_arr[line]->run[0] == 0) && !empty(run))
             {
                 insert(blocked,get(run));
                 update_blocked(line,process_arr);
