@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #define SZ 101
 #define QUANTUM 3
-#define FNAME "input3.txt"
+#define FNAME "input1.txt"
 
 typedef struct queue //Makiko
 {
