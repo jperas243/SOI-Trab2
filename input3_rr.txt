@@ -1,0 +1,8 @@
+100 -> RUN: 4 1 1
+       BLOCKED: 6 7
+101 -> RUN: 1 2
+       BLOCKED: 5
+200 -> RUN: 1 2 4
+       BLOCKED: 7 8
+300 -> RUN: 2 1
+       BLOCKED: 6
