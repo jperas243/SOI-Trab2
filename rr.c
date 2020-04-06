@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #define SZ 101
 #define QUANTUM 200
-#define FNAME "input3.txt"
+#define FNAME "input1.txt"
 
 typedef struct queue //Makiko
 {
@@ -209,7 +209,7 @@ void update_index_blocked(int n_process, process_t *process_arr[], int size)
     }
 }
 
-void rr(int n_process, process_t *process_arr[])
+void rr(int n_process, process_t *process_arr[], int user_quantum)
 {
 queue_t *ready = create_queue(SZ); 
 queue_t *run = create_queue(SZ);
@@ -229,9 +229,9 @@ for (int i = 0; i < 65; i++) //Instantes
                 j --;
             }
         }
-        if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == QUANTUM - 1))
+        if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == user_quantum - 1))
         {
-            if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == QUANTUM - 1)
+            if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == user_quantum - 1)
             {
                 insert(ready,get(run));    
             }
@@ -283,7 +283,7 @@ for (int i = 0; i < 65; i++) //Instantes
         update_run(find_PID(top(run),process_arr, n_process), process_arr);
     }
     
-    if(i > 0 && quantum >= 0 && quantum < QUANTUM - 1 && !empty(run))
+    if(i > 0 && quantum >= 0 && quantum < user_quantum - 1 && !empty(run))
     {
         update_run(find_PID(top(run),process_arr,n_process),process_arr);
     }
@@ -313,6 +313,14 @@ for (int i = 0; i < 65; i++) //Instantes
 int main()
 {
 
+int quantum;
+printf("Insert the desired Quantum:");
+scanf("%d", &quantum);
+
+if(quantum <= 0){
+    return 0;
+}
+
 FILE *fp = fopen(FNAME, "r");
 
 process_t *process_arr [SZ];
@@ -335,7 +343,7 @@ for (int j = 0; j < comprimento; ++j)
     }
 }
 
-rr(n_processo, process_arr);
+rr(n_processo, process_arr, quantum);
 printf("Acabou");
 
 
