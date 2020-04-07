@@ -361,6 +361,12 @@ int main(int argc, char *argv[])
 
             FILE *fp = fopen(argv[2], "r");
 
+            if(fp == NULL)
+            {
+                red("File not found! Check path.");
+                return 0;
+            }
+
             process_t *process_arr [ARR_SZ];
             int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
 
@@ -388,6 +394,12 @@ int main(int argc, char *argv[])
         else if (strcmp( argv[1], "--rr") == 0)
         {
             FILE *fp = fopen(argv[2], "r");
+            
+            if(fp == NULL)
+            {
+                red("File not found! Check path.");
+                return 0;
+            }
 
             process_t *process_arr [ARR_SZ];
             int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
