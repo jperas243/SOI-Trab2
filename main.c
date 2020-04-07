@@ -92,8 +92,13 @@ void scheduler(int n_process, process_t *process_arr[], int n_quantum)
         
         if(empty(ready) && empty(run) && empty(blocked))
         {
-            green("The program executed sucessfully!");
-            return;
+            green("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            printf("\n");
+            green("┃  The program run Sucessfully (✓) ┃");
+            printf("\n");
+            green("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            printf("\n");
+	    return;
         }
 
         yellow("Instant");printf(" %d - ", i);
