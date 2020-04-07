@@ -306,8 +306,8 @@ for (int i = 0; i < 65; i++) //Instantes
     }
 
     green("Instant");printf(" %d - ", i);
-    yellow("READY: ");printQueue(ready);printf(" ||");
-    yellow ("RUN: "); printQueue(run);printf("||");
+    yellow("Ready: ");printQueue(ready);printf(" |");
+    yellow (" Run: "); printQueue(run);printf("|");
     yellow(" Blocked: "); printQueue(blocked);
     printf("\n");
 
