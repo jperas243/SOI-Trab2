@@ -2,11 +2,33 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "prints.h"
 #define ARR_SZ 11
 #define SZ 225
 #define QUANTUM 3
 #define QUANTUM_FCFS 950
 #define FNAME "input1.txt"
+
+void green(char input[]) 
+{
+  printf("\033[0;32m");
+  printf("%s", input);
+  printf("\033[0m");
+}
+
+void yellow(char input[]) 
+{
+  printf("\033[0;33m");
+  printf("%s", input);
+  printf("\033[0m");
+}
+
+void red(char input[]) 
+{
+  printf("\033[0;31m");
+  printf("%s", input);
+  printf("\033[0m");
+}
 
 typedef struct queue //Makiko
 {
@@ -213,27 +235,6 @@ void update_index_blocked(int n_process, process_t *process_arr[], int size)
     }
 }
 
-void green(char input[]) 
-{
-  printf("\033[0;32m");
-  printf("%s", input);
-  printf("\033[0m");
-}
-
-void yellow(char input[]) 
-{
-  printf("\033[0;33m");
-  printf("%s", input);
-  printf("\033[0m");
-}
-
-void red(char input[]) 
-{
-  printf("\033[0;31m");
-  printf("%s", input);
-  printf("\033[0m");
-}
-
 void rr(int n_process, process_t *process_arr[], int n_quantum)
 {
     queue_t *ready = create_queue(SZ); 
@@ -251,7 +252,8 @@ void rr(int n_process, process_t *process_arr[], int n_quantum)
                 if(process_arr[find_PID( blocked->array[j], process_arr, n_process)]->blocked[0] == 0) //Do blocked para o Ready
                 {
                     insert(ready,get_pos(blocked,j));
-                    update_index_blocked(find_PID(top(ready),process_arr,n_process),process_arr,(ready->final_pos - ready->inicial_pos)); 
+                    update_index_blocked(find_PID(top(ready),process_arr,n_process),process_arr,(ready->final_pos - ready->inicial_pos));
+                    j--;
                 }
             }
             if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == n_quantum - 1))
@@ -417,33 +419,5 @@ int main(int argc, char *argv[])
         }
         
     }
-    
-
-    /* FILE *fp = fopen(FNAME, "r");
-
-    process_t *process_arr [ARR_SZ];
-    int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
-
-    while(fscanf(fp, "%d", &inteiro) != EOF)
-    {
-        arr[comprimento] = inteiro;
-        comprimento++;
-
-    }
-    for (int j = 0; j < comprimento; ++j)
-    {
-        if(arr[j + 1] >= 100 || j == comprimento)
-        {
-            process_arr[n_processo] = insert_process(ini, j, n_processo, arr);
-            ini = j + 1;
-            n_processo++;
-        }
-    }
-
-    rr(n_processo, process_arr);
-
-
-    fclose(fp); */
-
     return 0;
 }
