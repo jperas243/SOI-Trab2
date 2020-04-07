@@ -29,3 +29,10 @@ void red(char input[])
   printf("%s", input);
   printf("\033[0m");
 }
+
+void blue(char input[]) 
+{
+  printf("\033[0;34m");
+  printf("%s", input);
+  printf("\033[0m");
+}
