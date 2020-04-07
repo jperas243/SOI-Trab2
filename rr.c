@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #define SZ 101
-#define QUANTUM 100
+#define QUANTUM 3
 #define FNAME "input1.txt"
 
 typedef struct queue //Makiko
@@ -247,9 +247,9 @@ for (int i = 0; i < 65; i++) //Instantes
                 update_index_blocked(find_PID(top(ready),process_arr,n_process),process_arr,(ready->final_pos - ready->inicial_pos)); 
             }
         }
-        if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == QUANTUM))
+        if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == QUANTUM - 1))
         {
-            if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == QUANTUM)
+            if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == QUANTUM - 1)
             {
                 insert(ready,get(run));    
             }
@@ -301,7 +301,7 @@ for (int i = 0; i < 65; i++) //Instantes
         update_run(find_PID(top(run),process_arr, n_process), process_arr);
     }
     
-    if(i > 0 && quantum >= 0 && quantum < QUANTUM && !empty(run))
+    if(i > 0 && quantum >= 0 && quantum < QUANTUM - 1 && !empty(run))
     {
         update_run(find_PID(top(run),process_arr,n_process),process_arr);
     }
