@@ -69,7 +69,7 @@ void printQueue(queue_t *queue)
 {
 if(empty(queue))
 {
-    printf("Empty!");
+    red("Empty!");
 }
 else
 {
@@ -164,7 +164,7 @@ for(int i = 0; i < n_process; i++)
     }
 }
 return -1;
-printf("PID not found!");
+red("PID not found!");
 }
 
 void update_run(int n_process, process_t *process_arr[])
@@ -217,6 +217,12 @@ void green(char input[]) {
 
 void yellow(char input[]) {
   printf("\033[0;33m");
+  printf("%s", input);
+  printf("\033[0m");
+}
+
+void red(char input[]) {
+  printf("\033[0;31m");
   printf("%s", input);
   printf("\033[0m");
 }
