@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #define SZ 101
-#define QUANTUM 2
+#define QUANTUM 100
 #define FNAME "input1.txt"
 
 typedef struct queue //Makiko
@@ -209,12 +209,25 @@ void update_index_blocked(int n_process, process_t *process_arr[], int size)
     }
 }
 
+void green(char input[]) {
+  printf("\033[0;32m");
+  printf("%s", input);
+  printf("\033[0m");
+}
+
+void yellow(char input[]) {
+  printf("\033[0;33m");
+  printf("%s", input);
+  printf("\033[0m");
+}
+
 void rr(int n_process, process_t *process_arr[])
 {
 queue_t *ready = create_queue(SZ); 
 queue_t *run = create_queue(SZ);
 queue_t *blocked = create_queue(SZ);
 int quantum = -1;
+
 
 for (int i = 0; i < 65; i++) //Instantes
 {
@@ -292,10 +305,10 @@ for (int i = 0; i < 65; i++) //Instantes
         return;
     }
 
-    printf("Instante: %d || Ready:  ", i); printQueue(ready);
-    printf("  || Run:  "); printQueue(run);
-    printf("  || Blocked:  "); printQueue(blocked);
-    //printf("  || Quantum: %d", quantum);
+    green("Instant");printf(" %d - ", i);
+    yellow("READY: ");printQueue(ready);printf(" ||");
+    yellow ("RUN: "); printQueue(run);printf("||");
+    yellow(" Blocked: "); printQueue(blocked);
     printf("\n");
 
     quantum++;
@@ -323,7 +336,6 @@ while(fscanf(fp, "%d", &inteiro) != EOF)
     comprimento++;
 
 }
-printf("%d\n", arr[comprimento - 1]);
 for (int j = 0; j < comprimento; ++j)
 {
     if(arr[j + 1] >= 100 || j == comprimento)
