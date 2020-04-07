@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #define ARR_SZ 11
 #define SZ 225
 #define QUANTUM 3
@@ -328,11 +329,72 @@ void rr(int n_process, process_t *process_arr[])
 }
 
 
-int main()
+int main(int argc, char *argv[])
 {
+    if(argc == 1)
+    {
+        red("You forgot to pass the arguments. Use --help argument");
+    }
+    else if(argc > 3){
+        red("I don`t need so many arguments. Use --help argument");
+    }
+    else
+    {
+        if (strcmp( argv[1], "--help") == 0)
+        {
+            yellow("Some examples how to use:"); printf("\n");
+            printf("\n");
+            printf("./compiled --fcfs filename \n");
+            printf("./compiled --rr filename \n");
+            printf("\n");
+            red("Warning: Don`t forget to change the Quantum via the #Define");
+        }
+        else if (argc == 2)
+        {
+            red("You forgot to pass file name argument!\n Check the ./compiled --help.");
+        }              
+        else if (strcmp( argv[1], "--fcfs") == 0)
+        {
+            printf("Entrou %s", argv[2]);
+
+            FILE *fp = fopen(argv[2], "r");
+
+            process_t *process_arr [ARR_SZ];
+            int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
+
+            while(fscanf(fp, "%d", &inteiro) != EOF)
+            {
+                arr[comprimento] = inteiro;
+                comprimento++;
+
+            }
+            for (int j = 0; j < comprimento; ++j)
+            {
+                if(arr[j + 1] >= 100 || j == comprimento)
+                {
+                    process_arr[n_processo] = insert_process(ini, j, n_processo, arr);
+                    ini = j + 1;
+                    n_processo++;
+                }
+            }
+
+            rr(n_processo, process_arr);
 
 
-    FILE *fp = fopen(FNAME, "r");
+            fclose(fp);    
+        }
+        else if (strcmp( argv[1], "--rr") == 0)
+        {
+        }
+        else
+        {
+            red("Use --help argument");
+        }
+        
+    }
+    
+
+    /* FILE *fp = fopen(FNAME, "r");
 
     process_t *process_arr [ARR_SZ];
     int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
@@ -356,7 +418,7 @@ int main()
     rr(n_processo, process_arr);
 
 
-    fclose(fp);
+    fclose(fp); */
 
     return 0;
 }
