@@ -7,7 +7,7 @@
 #include "process.c"
 #define ARR_SZ 11
 #define SZ 225
-#define QUANTUM 3
+#define QUANTUM_RR 3
 #define QUANTUM_FCFS 950
 
 void scheduler(int n_process, process_t *process_arr[], int n_quantum)
@@ -142,26 +142,26 @@ int main(int argc, char *argv[])
                 return 0;
             }
 
+            int beg = 0, process_n = 0,size = 0, integer,arr[SZ];
             process_t *process_arr [ARR_SZ];
-            int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
 
-            while(fscanf(fp, "%d", &inteiro) != EOF)
+            while(fscanf(fp, "%d", &integer) != EOF)
             {
-                arr[comprimento] = inteiro;
-                comprimento++;
-
+                arr[size] = integer;
+                size++;
             }
-            for (int j = 0; j < comprimento; ++j)
+
+            for (int j = 0; j < size; ++j)
             {
-                if(arr[j + 1] >= 100 || j == comprimento)
+                if(arr[j + 1] >= 100 || j == size)
                 {
-                    process_arr[n_processo] = insert_process(ini, j, n_processo, arr);
-                    ini = j + 1;
-                    n_processo++;
+                    process_arr[process_n] = insert_process(beg, j, process_n, arr);
+                    beg = j + 1;
+                    process_n++;
                 }
             }
 
-            scheduler(n_processo, process_arr, QUANTUM_FCFS);
+            scheduler(process_n, process_arr, QUANTUM_FCFS);
 
 
             fclose(fp);    
@@ -176,26 +176,26 @@ int main(int argc, char *argv[])
                 return 0;
             }
 
+            int beg = 0, process_n = 0,size = 0, integer,arr[SZ];
             process_t *process_arr [ARR_SZ];
-            int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
 
-            while(fscanf(fp, "%d", &inteiro) != EOF)
+            while(fscanf(fp, "%d", &integer) != EOF)
             {
-                arr[comprimento] = inteiro;
-                comprimento++;
-
+                arr[size] = integer;
+                size++;
             }
-            for (int j = 0; j < comprimento; ++j)
+
+            for (int j = 0; j < size; ++j)
             {
-                if(arr[j + 1] >= 100 || j == comprimento)
+                if(arr[j + 1] >= 100 || j == size)
                 {
-                    process_arr[n_processo] = insert_process(ini, j, n_processo, arr);
-                    ini = j + 1;
-                    n_processo++;
+                    process_arr[process_n] = insert_process(beg, j, process_n, arr);
+                    beg = j + 1;
+                    process_n++;
                 }
             }
 
-            scheduler(n_processo, process_arr, QUANTUM);
+            scheduler(process_n, process_arr, QUANTUM_RR);
 
 
             fclose(fp);      
