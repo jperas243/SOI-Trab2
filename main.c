@@ -9,9 +9,8 @@
 #define SZ 225
 #define QUANTUM 3
 #define QUANTUM_FCFS 950
-#define FNAME "input1.txt"
 
-void rr(int n_process, process_t *process_arr[], int n_quantum)
+void scheduler(int n_process, process_t *process_arr[], int n_quantum)
 {
     queue_t *ready = create_queue(SZ); 
     queue_t *run = create_queue(SZ);
@@ -162,7 +161,7 @@ int main(int argc, char *argv[])
                 }
             }
 
-            rr(n_processo, process_arr, QUANTUM_FCFS);
+            scheduler(n_processo, process_arr, QUANTUM_FCFS);
 
 
             fclose(fp);    
@@ -196,7 +195,7 @@ int main(int argc, char *argv[])
                 }
             }
 
-            rr(n_processo, process_arr, QUANTUM);
+            scheduler(n_processo, process_arr, QUANTUM);
 
 
             fclose(fp);      
