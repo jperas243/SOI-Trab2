@@ -5,6 +5,7 @@
 #define ARR_SZ 11
 #define SZ 225
 #define QUANTUM 3
+#define QUANTUM_FCFS 950
 #define FNAME "input1.txt"
 
 typedef struct queue //Makiko
@@ -233,7 +234,7 @@ void red(char input[])
   printf("\033[0m");
 }
 
-void rr(int n_process, process_t *process_arr[])
+void rr(int n_process, process_t *process_arr[], int n_quantum)
 {
     queue_t *ready = create_queue(SZ); 
     queue_t *run = create_queue(SZ);
@@ -253,9 +254,9 @@ void rr(int n_process, process_t *process_arr[])
                     update_index_blocked(find_PID(top(ready),process_arr,n_process),process_arr,(ready->final_pos - ready->inicial_pos)); 
                 }
             }
-            if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == QUANTUM - 1))
+            if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == n_quantum - 1))
             {
-                if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == QUANTUM - 1)
+                if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == n_quantum - 1)
                 {
                     insert(ready,get(run));    
                 }
@@ -307,7 +308,7 @@ void rr(int n_process, process_t *process_arr[])
             update_run(find_PID(top(run),process_arr, n_process), process_arr);
         }
         
-        if(i > 0 && quantum >= 0 && quantum < QUANTUM - 1 && !empty(run))
+        if(i > 0 && quantum >= 0 && quantum < n_quantum - 1 && !empty(run))
         {
             update_run(find_PID(top(run),process_arr,n_process),process_arr);
         }
@@ -355,7 +356,6 @@ int main(int argc, char *argv[])
         }              
         else if (strcmp( argv[1], "--fcfs") == 0)
         {
-            printf("Entrou %s", argv[2]);
 
             FILE *fp = fopen(argv[2], "r");
 
@@ -378,13 +378,38 @@ int main(int argc, char *argv[])
                 }
             }
 
-            rr(n_processo, process_arr);
+            rr(n_processo, process_arr, QUANTUM_FCFS);
 
 
             fclose(fp);    
         }
         else if (strcmp( argv[1], "--rr") == 0)
         {
+            FILE *fp = fopen(argv[2], "r");
+
+            process_t *process_arr [ARR_SZ];
+            int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
+
+            while(fscanf(fp, "%d", &inteiro) != EOF)
+            {
+                arr[comprimento] = inteiro;
+                comprimento++;
+
+            }
+            for (int j = 0; j < comprimento; ++j)
+            {
+                if(arr[j + 1] >= 100 || j == comprimento)
+                {
+                    process_arr[n_processo] = insert_process(ini, j, n_processo, arr);
+                    ini = j + 1;
+                    n_processo++;
+                }
+            }
+
+            rr(n_processo, process_arr, QUANTUM);
+
+
+            fclose(fp);      
         }
         else
         {
