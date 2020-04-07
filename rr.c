@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#define SZ 101
+#define ARR_SZ 11
+#define SZ 225
 #define QUANTUM 3
 #define FNAME "input1.txt"
 
@@ -335,7 +336,7 @@ int main()
 
     FILE *fp = fopen(FNAME, "r");
 
-    process_t *process_arr [SZ];
+    process_t *process_arr [ARR_SZ];
     int inteiro, arr[SZ], comprimento = 0, ini = 0, n_processo = 0;
 
     while(fscanf(fp, "%d", &inteiro) != EOF)
