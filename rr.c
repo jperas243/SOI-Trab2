@@ -313,10 +313,11 @@ void rr(int n_process, process_t *process_arr[])
         
         if(empty(ready) && empty(run) && empty(blocked))
         {
+            green("The program executed sucessfully!");
             return;
         }
 
-        green("Instant");printf(" %d - ", i);
+        yellow("Instant");printf(" %d - ", i);
         yellow("Ready: ");printQueue(ready);printf(" |");
         yellow (" Run: "); printQueue(run);printf("|");
         yellow(" Blocked: "); printQueue(blocked);
@@ -327,12 +328,9 @@ void rr(int n_process, process_t *process_arr[])
 }
 
 
-
-
-
-
 int main()
 {
+
 
     FILE *fp = fopen(FNAME, "r");
 
@@ -356,8 +354,6 @@ int main()
     }
 
     rr(n_processo, process_arr);
-    printf("Acabou");
-
 
 
     fclose(fp);
