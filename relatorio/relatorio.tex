@@ -44,13 +44,12 @@
 \hspace{0,5cm}Neste trabalho foi solicitado a realização de um programa que simule o \textbf{Escalonamento de Processos} num modelo de 3 estados. Na figura abaixo está representado o diagrama que descreve o modelo de 3 estados:\par
 \begin{figure}[h!]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{images/states.png}
+        \includegraphics[width=0.5\textwidth]{images/states.png}
         \caption{Diagrama de 3 Estados}
     \end{center}
 \end{figure}
 O \textbf{Escalonador de Processos} faz parte do \textbf{Sistema Opertivo} e é responsável por decidir em que momento cada processo estará no CPU. 
 Existem muitos algoritmos de escalonamento para realizar essa decisão. \par
-\newpage
 Neste trabalho serão utilizados o algoritmo \textbf{FCFS} e o \textbf{Round Robin (RR)}:
 \begin{itemize}
     \item O \textbf{FCFS} é um algoritmo de escalonamento não preemptivo que prioriza os processos pela ordem de chegada. Executa o processo todo do inicio ao fim sem o interromper, até estar concluído. Quando aparece um novo processo e ainda existe um em execução, esse novo irá para a fila de espera.
@@ -67,6 +66,31 @@ O próximo desafio foi proceder a leitura do input (ficheiro com os processos e 
 Por conseguinte, comecei por desenvolver a função que iria realizar as trocas dos processos entre os 3 estados. Esta função foi a mais difícil de realizar devido a complexidade dos requísitos para os processos mudarem de estados. Foi necessário também proceder a criação de novas funções para facilitar alguns procedimentos que eram realizados de forma repetitiva.
 
 % -------------------------------------------------------------------------------------------
+\section{Funções}
+\begin{itemize}
+    \item Funções pertencentes há manipulação das \verb|queues|:
+        \begin{itemize}
+            \item A função "\verb|queue_t *create_queue (int sz)|" cria a estrutura e aloca espaço para a \verb|queue|;
+            \item A função "\verb|void insert (queue_t *queue, int element)|" adiciona elementos na stack;
+            \item A função "\verb|bool full (queue_t *queue)|" verifica se a stack se encontra \textbf{cheia}. Caso esteja, devolve \verb|True|;
+            \item A função "\verb|bool empty (queue_t *queue)|" verifica se a stack se encontra \textbf{vazia}. Caso esteja, devolve \verb|True|;
+            \item A função "\verb|int get (queue_t *queue)|" remove o primeiro elemento da stack, dando \verb|return| desse valor e move os elementos para a esquerda \verb|queue|. Por exemplo o elemento da posição 2 passa para a posição 1;
+            \item A função "\verb|void printQueue(queue_t *queue)|" dá \verb|print| de todos os elementos da \verb|queue|;
+            \item A função "\verb|int top(queue_t *queue)|" dá \verb|return| do valor da última posição do \verb|queue|.
+        \end{itemize}
+    \item Funções pertencentes há manipulação da \verb|struct de processos|:
+        \begin{itemize}
+            \item A função "\verb|process_t *create_process(int sz);|" cria a estrutura e aloca espaço para o \verb|processo|;
+            \item A função "\verb|process_t *insert_process(int beg, int end, int queues, int arr[]);|" \newline insere um processo;
+            \item A função "\verb|int find_PID(int PID, process_t *process_arr[], int n_process)|" procura o PID no array e devolve a sua posição;
+            \item A função "\verb|void update_run(int n_process, process_t *process_arr[])|" decrementa a primeira posição do run do processo;
+            \item A função "\verb|void update_blocked(int n_process, process_t *process_arr[])|" decrementa a primeira posição do blocked do processo;
+            \item A função "\verb|void update_index_run(int n_process, process_t *process_arr[], int size)|" \newline move os elementos do run do processo para a esquerda e verifique se existe algum número maior que 1000, caso exista irá mudar esse valor para 0;
+            \item A função "\verb|void update_index_blocked(int n_process, process_t *process_arr[], int size)| \newline move os elementos do blocked do processo para a esquerda e verifique se existe algum número maior que 1000, caso exista irá mudar esse valor para 0"
+        \end{itemize}
+\end{itemize}
+
+%-------------------------------------------------------------------------------------------
 \section{Execução}
 
 \hspace{0,5cm}Quando o utilizador executar o \textbf{Simulador de Escalonamento} irá ser questionado acerca do nome do ficheiro de input e qual algoritmo pretende utilizar.
@@ -74,13 +98,119 @@ Por conseguinte, comecei por desenvolver a função que iria realizar as trocas 
     \item Caso o utilizador escolha o \textbf{FCFS}, o \textbf{QUANTUM} irá ter um valor de \textbf{10000}, assim nunca irá obrigar o programa a passar para o estado ready.
     \item Caso o utilizador escolha o \textbf{Round Robin}, será perguntado ao utilizador qual o \textbf{Quantum} desejado.
 \end{itemize}
-% -------------------------------------------------------------------------------------------
+% ----------\item ---------------------------------------------------------------------------------
 \section{Análise de Resultados} % Conclusão
-Em suma, este trabalho fez-me entender melhor como funciona o escalonador e as condições que cada algoritmo usa para proceder há mudança dos processos entre os estados e as diferenças de tempo. 
+\begin{itemize}
+    \item Escalonamento com o Algoritmo \textbf{FCFS}:
+    \begin{itemize}
+        \item Com o \verb|input1.txt|:
+        \begin{verbatim}
+Instant 0 - Ready: 101  | Run: 100 | Blocked: Empty!
+Instant 1 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 2 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 3 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 4 - Ready: 200 300 100  | Run: 101 | Blocked: Empty!
+Instant 5 - Ready: 300 100  | Run: 200 | Blocked: 101 
+Instant 6 - Ready: 300 100  | Run: 200 | Blocked: 101 
+Instant 7 - Ready: 100  | Run: 300 | Blocked: 101 200 
+Instant 8 - Ready: 100  | Run: 300 | Blocked: 101 200 
+Instant 9 - Ready: 100 101  | Run: 300 | Blocked: 200 
+Instant 10 - Ready: 100 101  | Run: 300 | Blocked: 200 
+Instant 11 - Ready: 100 101  | Run: 300 | Blocked: 200 
+Instant 12 - Ready: 100 101 200  | Run: 300 | Blocked: Empty!
+Instant 13 - Ready: 100 101 200  | Run: 300 | Blocked: Empty!
+Instant 14 - Ready: 101 200  | Run: 100 | Blocked: 300 
+Instant 15 - Ready: 101 200  | Run: 100 | Blocked: 300 
+Instant 16 - Ready: 101 200  | Run: 100 | Blocked: 300 
+Instant 17 - Ready: 101 200  | Run: 100 | Blocked: 300 
+Instant 18 - Ready: 101 200  | Run: 100 | Blocked: 300 
+Instant 19 - Ready: 101 200  | Run: 100 | Blocked: 300 
+Instant 20 - Ready: 101 200 300  | Run: 100 | Blocked: Empty!
+Instant 21 - Ready: 101 200 300  | Run: 100 | Blocked: Empty!
+Instant 22 - Ready: 101 200 300  | Run: 100 | Blocked: Empty!
+Instant 23 - Ready: 101 200 300  | Run: 100 | Blocked: Empty!
+Instant 24 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 25 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 26 - Ready: 300  | Run: 200 | Blocked: 100 
+Instant 27 - Ready: 100  | Run: 300 | Blocked: 200 
+Instant 28 - Ready: Empty! | Run: 100 | Blocked: 200 
+Instant 29 - Ready: 200  | Run: 100 | Blocked: Empty!
+Instant 30 - Ready: 200  | Run: 100 | Blocked: Empty!
+Instant 31 - Ready: 200  | Run: 100 | Blocked: Empty!
+Instant 32 - Ready: 200  | Run: 100 | Blocked: Empty!
+Instant 33 - Ready: 200  | Run: 100 | Blocked: Empty!
+Instant 34 - Ready: Empty! | Run: 200 | Blocked: Empty!
+Instant 35 - Ready: Empty! | Run: 200 | Blocked: Empty!
+Instant 36 - Ready: Empty! | Run: 200 | Blocked: Empty!    
+        \end{verbatim}
+        \item Com o \verb|input2.txt|:
+        \begin{verbatim}
+
+        \end{verbatim}
+        \item Com o \verb|input3.txt|:
+        \begin{verbatim}
+            
+        \end{verbatim}
+    \end{itemize}
+    \item Escalonamento com o Algoritmo \textbf{RR (Round Robin)}:
+    \begin{itemize}
+        \item Com o \verb|input1.txt|:
+        \begin{verbatim}
+Instant 0 - Ready: 101  | Run: 100 | Blocked: Empty!
+Instant 1 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 2 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 3 - Ready: 200 300  | Run: 101 | Blocked: 100 
+Instant 4 - Ready: 300 100 101  | Run: 200 | Blocked: Empty!
+Instant 5 - Ready: 300 100 101  | Run: 200 | Blocked: Empty!
+Instant 6 - Ready: 100 101  | Run: 300 | Blocked: 200 
+Instant 7 - Ready: 100 101  | Run: 300 | Blocked: 200 
+Instant 8 - Ready: 100 101  | Run: 300 | Blocked: 200 
+Instant 9 - Ready: 101 300  | Run: 100 | Blocked: 200 
+Instant 10 - Ready: 101 300  | Run: 100 | Blocked: 200 
+Instant 11 - Ready: 101 300 200  | Run: 100 | Blocked: Empty!
+Instant 12 - Ready: 300 200 100  | Run: 101 | Blocked: Empty!
+Instant 13 - Ready: 200 100  | Run: 300 | Blocked: 101 
+Instant 14 - Ready: 200 100  | Run: 300 | Blocked: 101 
+Instant 15 - Ready: 200 100  | Run: 300 | Blocked: 101 
+Instant 16 - Ready: 100 300  | Run: 200 | Blocked: 101 
+Instant 17 - Ready: 300 101  | Run: 100 | Blocked: 200 
+Instant 18 - Ready: 300 101  | Run: 100 | Blocked: 200 
+Instant 19 - Ready: 300 101 200  | Run: 100 | Blocked: Empty!
+Instant 20 - Ready: 101 200 100  | Run: 300 | Blocked: Empty!
+Instant 21 - Ready: 200 100  | Run: 101 | Blocked: 300 
+Instant 22 - Ready: 200 100  | Run: 101 | Blocked: 300 
+Instant 23 - Ready: 100  | Run: 200 | Blocked: 300 
+Instant 24 - Ready: 100  | Run: 200 | Blocked: 300 
+Instant 25 - Ready: 100  | Run: 200 | Blocked: 300 
+Instant 26 - Ready: Empty! | Run: 100 | Blocked: 300 
+Instant 27 - Ready: 300  | Run: 100 | Blocked: Empty!
+Instant 28 - Ready: 300  | Run: 100 | Blocked: Empty!
+Instant 29 - Ready: 100  | Run: 300 | Blocked: Empty!
+Instant 30 - Ready: Empty! | Run: 100 | Blocked: Empty!
+Instant 31 - Ready: Empty! | Run: Empty!| Blocked: 100 
+Instant 32 - Ready: Empty! | Run: Empty!| Blocked: 100 
+Instant 33 - Ready: Empty! | Run: Empty!| Blocked: 100 
+Instant 34 - Ready: Empty! | Run: 100 | Blocked: Empty!
+Instant 35 - Ready: Empty! | Run: 100 | Blocked: Empty!
+Instant 36 - Ready: Empty! | Run: 100 | Blocked: Empty!
+Instant 37 - Ready: Empty! | Run: 100 | Blocked: Empty!
+Instant 38 - Ready: Empty! | Run: 100 | Blocked: Empty!
+Instant 39 - Ready: Empty! | Run: 100 | Blocked: Empty!            
+        \end{verbatim}
+        \item Com o \verb|input2.txt|:
+        \begin{verbatim}
+            
+        \end{verbatim}
+        \item Com o \verb|input3.txt|:
+        \begin{verbatim}
+            
+        \end{verbatim}
+    \end{itemize}
+\end{itemize}
 
 % -------------------------------------------------------------------------------------------
 \section{Problemas}
-\hspace{0,5cm}Neste trabalho só existe um problema e consiste no facto de que em algumas execuções o ultimo processo existente no ficheiro não é lido, mas este problema só acontece no \textbf{Linux}. Por outro lado no \textbf{Windows} este problema não ocorre.
+\hspace{0,5cm}Neste trabalho só existiu um problema e consiste no facto de que em algumas execuções o ultimo processo existente no ficheiro não é lido, mas este problema só acontece no \textbf{Linux}. Por outro lado no \textbf{Windows} este problema não ocorre.
 % -------------------------------------------------------------------------------------------
 \section{Conclusão} % Conclusão
 Em suma, este trabalho fez-me entender melhor como funciona o escalonador e as condições que cada algoritmo usa para proceder há mudança dos processos entre os estados e as diferenças de tempo. 
