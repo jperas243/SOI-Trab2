@@ -3,7 +3,6 @@
 #include <stdbool.h>
 #include <string.h>
 #include "prints.c"
-#include "queues.c"
 #include "process.c"
 #define ARR_SZ 11
 #define SZ 225
@@ -101,11 +100,7 @@ void scheduler(int n_process, process_t *process_arr[], int n_quantum)
 	        return;
         }
 
-        yellow("Instant");printf(" %d - ", i);
-        yellow("Ready: ");printQueue(ready);printf(" |");
-        yellow (" Run: "); printQueue(run);printf("|");
-        yellow(" Blocked: "); printQueue(blocked);
-        printf("\n");
+        print_scheduler(i,ready,run,blocked);
 
         quantum++;
     }

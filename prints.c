@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "prints.h"
+#include "queues.c"
 #define ARR_SZ 11
 #define SZ 225
 #define QUANTUM 3
@@ -36,3 +37,13 @@ void blue(char input[])
   printf("%s", input);
   printf("\033[0m");
 }
+
+void print_scheduler(int inst, queue_t *ready, queue_t *run, queue_t *blocked)
+{
+  yellow("Instant");printf(" %d - ", inst);
+  yellow("Ready: ");printQueue(ready);printf(" |");
+  yellow (" Run: "); printQueue(run);printf("|");
+  yellow(" Blocked: "); printQueue(blocked);
+  printf("\n");
+}
+
