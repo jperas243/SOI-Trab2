@@ -19,7 +19,7 @@ queue_t *create_queue (int sz) //Bob
     return queue_v;
 }
 
-void insert (queue_t *queue, int element) //Inserir
+void insert (queue_t *queue, int element)
 {
     if (!full (queue))
     {
@@ -28,17 +28,17 @@ void insert (queue_t *queue, int element) //Inserir
     }    
 }
 
-bool full (queue_t *queue) //Checka para saber se esta cheio
+bool full (queue_t *queue)
 {
     return queue -> sz == queue -> final_pos;
 }
 
-bool empty (queue_t *queue) //Checka para saber se esta vazio
+bool empty (queue_t *queue) 
 {
     return queue -> inicial_pos == queue -> final_pos;
 }
 
-int get (queue_t *queue) //Get primeiro elemento, o de baixo
+int get (queue_t *queue) //Remove first and return it, and move the others
 {
     if (empty (queue))
     {
@@ -70,12 +70,12 @@ void printQueue(queue_t *queue)
     }
 }
 
-int top(queue_t *queue)
+int top(queue_t *queue) //return first
 {
     return queue->array[queue->final_pos - 1];
 }
 
-int get_pos(queue_t *queue, int pos)
+int get_pos(queue_t *queue, int pos) //get pos and return it, and move others
 {
     int tmp = queue->array[pos];
     for (int i = pos; i < queue->final_pos; i++)

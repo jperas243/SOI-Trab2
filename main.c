@@ -17,52 +17,51 @@ void scheduler(int n_process, process_t *process_arr[], int n_quantum)
     int quantum = -1;
 
 
-    for (int i = 0; true; i++) //Instantes
+    for (int i = 0; true; i++) //Instant (infinite loop)
     {
         if (!empty(run) || !empty(ready) || !empty(blocked))
         {
             for (int j = 0; j < blocked->final_pos; j++)
             {
-                if(process_arr[find_PID( blocked->array[j], process_arr, n_process)]->blocked[0] == 0) //Do blocked para o Ready
+                if(process_arr[find_PID( blocked->array[j], process_arr, n_process)]->blocked[0] == 0) //If blocked has reached the end
                 {
                     insert(ready,get_pos(blocked,j));
                     update_index_blocked(find_PID(top(ready),process_arr,n_process),process_arr,(ready->final_pos - ready->inicial_pos));
                     j--;
                 }
             }
-            if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == n_quantum - 1))
+            if (!empty(run) && (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0 || quantum == n_quantum - 1)) //When RUN reaches the end or Quantum
             {
-                if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == n_quantum - 1)
+                if (process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] != 0 && quantum == n_quantum - 1) //If reached the max quantum
                 {
                     insert(ready,get(run));    
                 }
-                else if (process_arr[find_PID(top(run), process_arr, n_process)]->blocked[0] != 0 && process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0)
+                else if (process_arr[find_PID(top(run), process_arr, n_process)]->blocked[0] != 0 && process_arr[find_PID( run->array[0], process_arr, n_process)]->run[0] == 0) //If run reached the end
                 { 
                     insert(blocked, get(run));
                     update_index_run(find_PID(top(blocked),process_arr,n_process),process_arr, (blocked->final_pos - blocked->inicial_pos));
                 }
-                else
+                else //When everything finishes
                 {
                     get(run);
                 }
                 
             }
-            for (int j = 0; j < n_process; j++)
+            for (int j = 0; j < n_process; j++) //Add processes to READY
             {
-                if(process_arr[j]->inicial_time == i)  //Add processes to READY
+                if(process_arr[j]->inicial_time == i)  
                 {
                     insert(ready, process_arr[j]->PID);
                 }
             }
-            if (!empty(blocked))
+            if (!empty(blocked)) //If there is anything on the blocked it will decrease the blocked
             {
-                
                 for (int j = 0; j < blocked->final_pos; j++)
                 {
                     update_blocked(find_PID(blocked->array[j],process_arr,n_process),process_arr);
                 } 
             }
-            if(!empty(ready) && empty(run)) //Inserir se nao estiver nada no run
+            if(!empty(ready) && empty(run)) //Add to run if there`s nothing there
             { 
                 insert(run, get(ready));
                 quantum = -1; 
@@ -72,9 +71,9 @@ void scheduler(int n_process, process_t *process_arr[], int n_quantum)
 
         else
         {
-            for (int j = 0; j < n_process; j++)
+            for (int j = 0; j < n_process; j++) //Add processes to READY
             {
-                if(process_arr[j]->inicial_time == i)  //Add processes to READY
+                if(process_arr[j]->inicial_time == i)  
                 {
                     insert(ready, process_arr[j]->PID);
                 }
@@ -84,12 +83,12 @@ void scheduler(int n_process, process_t *process_arr[], int n_quantum)
             update_run(find_PID(top(run),process_arr, n_process), process_arr);
         }
         
-        if(i > 0 && quantum >= 0 && quantum < n_quantum - 1 && !empty(run))
+        if(i > 0 && quantum >= 0 && quantum < n_quantum - 1 && !empty(run)) //Decrease the run if there is something there
         {
             update_run(find_PID(top(run),process_arr,n_process),process_arr);
         }
         
-        if(empty(ready) && empty(run) && empty(blocked))
+        if(empty(ready) && empty(run) && empty(blocked)) //If everything is done it finishes
         {
             green("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
             printf("\n");

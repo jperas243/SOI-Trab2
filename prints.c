@@ -46,7 +46,7 @@ void print_scheduler(int inst, queue_t *ready, queue_t *run, queue_t *blocked)
     printf(" ");
   }
   printf(" %d - ", inst); //Print the Instant
-  yellow("Ready: ");printQueue(ready); //15
+  yellow("Ready: ");printQueue(ready);
   if(ready->final_pos == 0)
   {
     printf("       ");

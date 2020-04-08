@@ -109,4 +109,3 @@ void update_index_blocked(int n_process, process_t *process_arr[], int size)
         process_arr[n_process] -> blocked[i] = process_arr[n_process] -> blocked[i+1];
     }
 }
-
