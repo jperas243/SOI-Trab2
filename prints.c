@@ -40,10 +40,36 @@ void blue(char input[])
 
 void print_scheduler(int inst, queue_t *ready, queue_t *run, queue_t *blocked)
 {
-  yellow("Instant");printf(" %d - ", inst);
-  yellow("Ready: ");printQueue(ready);printf(" |");
-  yellow (" Run: "); printQueue(run);printf("|");
+  yellow("Instant");
+  if(inst <= 9)
+  {
+    printf(" ");
+  }
+  printf(" %d - ", inst); //Print the Instant
+  yellow("Ready: ");printQueue(ready); //15
+  if(ready->final_pos == 0)
+  {
+    printf("       ");
+  }
+  else if(ready->final_pos == 1)
+  {
+    printf("         ");
+  }
+  else if (ready->final_pos == 2)
+  {
+    printf("     ");
+  }
+  else if (ready->final_pos == 3)
+  {
+    printf(" ");
+  }
+  ;printf(" |");
+  yellow (" Run: "); printQueue(run);
+  if(run->final_pos == 1)
+  {
+    printf("  ");
+  }
+  printf("|");
   yellow(" Blocked: "); printQueue(blocked);
   printf("\n");
 }
-
