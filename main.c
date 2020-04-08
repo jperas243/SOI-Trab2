@@ -18,7 +18,7 @@ void scheduler(int n_process, process_t *process_arr[], int n_quantum)
     int quantum = -1;
 
 
-    for (int i = 0; i < 65; i++) //Instantes
+    for (int i = 0; true; i++) //Instantes
     {
         if (!empty(run) || !empty(ready) || !empty(blocked))
         {
@@ -92,13 +92,13 @@ void scheduler(int n_process, process_t *process_arr[], int n_quantum)
         
         if(empty(ready) && empty(run) && empty(blocked))
         {
-            green("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            green("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
             printf("\n");
-            green("┃  The program run Sucessfully (✓) ┃");
+            green("┃  The program run Successfully (✓) ┃");
             printf("\n");
-            green("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            green("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             printf("\n");
-	    return;
+	        return;
         }
 
         yellow("Instant");printf(" %d - ", i);
