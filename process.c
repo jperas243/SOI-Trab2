@@ -80,16 +80,12 @@ void update_blocked(int n_process, process_t *process_arr[])
 
 void update_index_run(int n_process, process_t *process_arr[], int size)
 {
-    for (int i = 0; i <= size; i++)
+    for (int i = 0; i <= size; ++i)
     {
         if(process_arr[n_process] -> run[i] > 1000)
         {
             process_arr[n_process] -> run[i] = 0;
         }
-    }
-
-    for (int i = 0; i <= size; ++i)
-    {
         process_arr[n_process] -> run[i] = process_arr[n_process] -> run[i+1];
     }
 }
@@ -102,10 +98,6 @@ void update_index_blocked(int n_process, process_t *process_arr[], int size)
         {
             process_arr[n_process] -> blocked[i] = 0;
         }
-    }
-    
-    for (int i = 0; i <= size; i++)
-    {
         process_arr[n_process] -> blocked[i] = process_arr[n_process] -> blocked[i+1];
     }
 }
