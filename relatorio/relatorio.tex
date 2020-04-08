@@ -53,20 +53,26 @@ Existem muitos algoritmos de escalonamento para realizar essa decisão. \par
 Neste trabalho serão utilizados o algoritmo \textbf{FCFS} e o \textbf{Round Robin (RR)}:
 \begin{itemize}
     \item O \textbf{FCFS} é um algoritmo de escalonamento não preemptivo que prioriza os processos pela ordem de chegada. Executa o processo todo do inicio ao fim sem o interromper, até estar concluído. Quando aparece um novo processo e ainda existe um em execução, esse novo irá para a fila de espera.
-    \item O \textbf{Round Robin (RR)} é um algoritmo de escalonamento preemptivo que apresenta um funcionamento igual ao do \textbf{FCFS}, mas com tempo limite de execução, o \textbf{Quantum}. Ou seja, quando o processo se encontra em execução este irá ser interrompido quando o tempo de execução for igual ao /textbf{Quantum} e irá para a fila de espera (/textbf{READY}) 
+    \item O \textbf{Round Robin (RR)} é um algoritmo de escalonamento preemptivo que apresenta um funcionamento igual ao do \textbf{FCFS}, mas com tempo limite de execução, o \textbf{Quantum}. Ou seja, quando o processo se encontra em execução este irá ser interrompido quando o tempo de execução for igual ao /textbf{Quantum} e irá para a fila de espera (\textbf{READY}) 
 \end{itemize}
 
 % -------------------------------------------------------------------------------------------
 \section{Implementação}
 
-\hspace{0,5cm}Primeiramente comecei por pensar como deveria proceder para realizar o trabalho, e na primeira tentativa comecei por desenvolver o \textbf{FCFS}, mas na segunda tentativa cheguei a conclusão de que não seria necessário realizar um programa para a implementação do \textbf{FCFS} e outro para o \textbf{Round Robin}, pois ambos são iguais, execto existir um limite de execução no \textbf{RR}. \par
-Poderei então meter um limite muito grande na execução, no \textbf{Quantum}, e estarei perante o FCFS. \par
-Comecei por proceder há criação das queues que iriam ser utilizados para o \textbf{READY}, \textbf{RUN} e \textbf{BLOCKED} e das respetivas funções essenciais para a sua manipulação. \par
-O próximo desafio foi proceder a leitura do input (ficheiro com os processos e os tempos), para isso foi necessário proceder a criação de uma \textbf{Struct} para os processos.\par
-Por conseguinte, comecei por desenvolver a função que iria realizar as trocas dos processos entre os 3 estados. Esta função foi a mais difícil de realizar devido a complexidade dos requísitos para os processos mudarem de estados. Foi necessário também proceder a criação de novas funções para facilitar alguns procedimentos que eram realizados de forma repetitiva.
-
+\hspace{0,5cm}Primeiramente comecei por pensar como deveria proceder para realizar o trabalho, na primeira tentativa comecei por desenvolver o \textbf{FCFS}, mas na segunda tentativa cheguei a conclusão de que não seria necessário realizar um programa para a implementação do \textbf{FCFS} e outro para o \textbf{Round Robin}, pois ambos são iguais, execto existir um limite de execução (\textbf{Quantum}) no \textbf{RR}.
+Poderei então meter um \textbf{Quantum} muito grande e estarei perante o \textbf{FCFS}. \par
+Comecei por proceder à criação das queues que iriam ser utilizados para guardar a informação de cada estado (\textbf{READY}, \textbf{RUN} e \textbf{BLOCKED}) e das respetivas funções essenciais para a sua manipulação. \par
+O próximo desafio foi proceder a leitura do input (ficheiro com os processos e os tempos), para isso foi necessário proceder a criação de uma \textbf{Struct} para guardar a informação dos processos.
+Através do \verb|fscanf| procedi a leitura do ficheiro e posteriormente permitiu guardar os processos na \textbf{Struct}. \par
+Por conseguinte, comecei por desenvolver a função \newline
+\verb|void scheduler(int n_process, process_t *process_arr[], int n_quantum)| que iria realizar as trocas dos processos entre os 3 estados. 
+Esta função funciona de forma \textbf{cíclica}, ou seja a variável \textbf{i} corresponde ao \textbf{instante} em que o \textbf{escalonador} se encontra.
+Este ciclo inicia em 0, que irá ser o instante inicial e termina quando todos os processos já tiverem sido executados.
+Foi necessário também proceder a criação de novas funções para facilitar alguns procedimentos que eram realizados de forma repetitiva.
+Demonstrou ser a função mais difícil de realizar devido a complexidade dos requísitos para os processos mudarem de estados. 
 % -------------------------------------------------------------------------------------------
 \section{Funções}
+    
 \begin{itemize}
     \item Funções pertencentes há manipulação das \verb|queues|:
         \begin{itemize}
@@ -93,10 +99,10 @@ Por conseguinte, comecei por desenvolver a função que iria realizar as trocas 
 %-------------------------------------------------------------------------------------------
 \section{Execução}
 
-\hspace{0,5cm}Quando o utilizador executar o \textbf{Simulador de Escalonamento} irá ser questionado acerca do nome do ficheiro de input e qual algoritmo pretende utilizar.
+\hspace{0,5cm}Para executar o \textbf{Simulador de Escalonamento} o utilizador deverá passar como argumento, qual algoritmo deseja usar e o ficheiro de input.
 \begin{itemize}
-    \item Caso o utilizador escolha o \textbf{FCFS}, o \textbf{QUANTUM} irá ter um valor de \textbf{10000}, assim nunca irá obrigar o programa a passar para o estado ready.
-    \item Caso o utilizador escolha o \textbf{Round Robin}, será perguntado ao utilizador qual o \textbf{Quantum} desejado.
+    \item Caso o utilizador escolha o \textbf{FCFS}, o \textbf{QUANTUM} irá ter um valor de \textbf{999}, assim nunca irá obrigar o programa a passar para o estado \textbf{READY}.
+    \item Caso o utilizador escolha o \textbf{Round Robin}, o programa irá correr com o \text{Quantum} definido no código (\verb|#define QUANTUM_RR|).
 \end{itemize}
 % ----------\item ---------------------------------------------------------------------------------
 \section{Análise de Resultados} % Conclusão
@@ -142,14 +148,7 @@ Instant 33 - Ready: 200  | Run: 100 | Blocked: Empty!
 Instant 34 - Ready: Empty! | Run: 200 | Blocked: Empty!
 Instant 35 - Ready: Empty! | Run: 200 | Blocked: Empty!
 Instant 36 - Ready: Empty! | Run: 200 | Blocked: Empty!    
-        \end{verbatim}
-        \item Com o \verb|input2.txt|:
-        \begin{verbatim}
-
-        \end{verbatim}
-        \item Com o \verb|input3.txt|:
-        \begin{verbatim}
-            
+    
         \end{verbatim}
     \end{itemize}
     \item Escalonamento com o Algoritmo \textbf{RR (Round Robin)}:
@@ -197,20 +196,9 @@ Instant 37 - Ready: Empty! | Run: 100 | Blocked: Empty!
 Instant 38 - Ready: Empty! | Run: 100 | Blocked: Empty!
 Instant 39 - Ready: Empty! | Run: 100 | Blocked: Empty!            
         \end{verbatim}
-        \item Com o \verb|input2.txt|:
-        \begin{verbatim}
-            
-        \end{verbatim}
-        \item Com o \verb|input3.txt|:
-        \begin{verbatim}
-            
-        \end{verbatim}
     \end{itemize}
 \end{itemize}
 
-% -------------------------------------------------------------------------------------------
-\section{Problemas}
-\hspace{0,5cm}Neste trabalho só existiu um problema e consiste no facto de que em algumas execuções o ultimo processo existente no ficheiro não é lido, mas este problema só acontece no \textbf{Linux}. Por outro lado no \textbf{Windows} este problema não ocorre.
 % -------------------------------------------------------------------------------------------
 \section{Conclusão} % Conclusão
 Em suma, este trabalho fez-me entender melhor como funciona o escalonador e as condições que cada algoritmo usa para proceder há mudança dos processos entre os estados e as diferenças de tempo. 
