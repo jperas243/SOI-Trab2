@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1586361119 "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.tex" "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.pdf" "relatorio" 1586361119
-  "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.aux" 1586361119 1516 42dc46e1e5052716ca49e63ef61ad62e ""
-  "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.tex" 1586361118 14400 887fc6e66900f4b981d97fc5e54dd752 ""
+["pdflatex"] 1586361382 "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.tex" "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.pdf" "relatorio" 1586361385
+  "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.aux" 1586361383 1516 42dc46e1e5052716ca49e63ef61ad62e ""
+  "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.tex" 1586361385 14758 9f1af3921819b58adad9117fa68ee216 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1572595918 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1572595918 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1572595918 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -147,13 +147,13 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1586178251 8044938 34fae28a3db128cba33a21784dbab834 ""
   "images/logo_universidade.png" 1586181861 24107 4729de415883a0b8bc952b0685b4b133 ""
   "images/states.png" 1586196578 20920 8f01f449980bf6e4c1416170bcfd002d ""
-  "relatorio.aux" 1586361119 1516 42dc46e1e5052716ca49e63ef61ad62e "pdflatex"
-  "relatorio.out" 1586361119 308 90b181cea58572bae8d09eca1d485107 "pdflatex"
-  "relatorio.tex" 1586361118 14400 887fc6e66900f4b981d97fc5e54dd752 ""
+  "relatorio.aux" 1586361383 1516 42dc46e1e5052716ca49e63ef61ad62e "pdflatex"
+  "relatorio.out" 1586361383 308 90b181cea58572bae8d09eca1d485107 "pdflatex"
+  "relatorio.tex" 1586361385 14758 9f1af3921819b58adad9117fa68ee216 ""
   (generated)
-  "relatorio.pdf"
-  "relatorio.log"
-  "relatorio.out"
-  "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.pdf"
   "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.log"
+  "/home/miguel/Documentos/Universidade/SOI/SOI-Trab1/relatorio/relatorio.pdf"
+  "relatorio.out"
   "relatorio.aux"
+  "relatorio.log"
+  "relatorio.pdf"

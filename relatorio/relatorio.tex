@@ -29,7 +29,7 @@
     \textbf{Professor:} Luís Rato \\
     \textbf{Realizado por:} Miguel de Carvalho 43108 
 }
-\date{3 de Abril de 2020}
+\date{\today}
 
 % -------------------------------------------------------------------------------------------
 %                                Body                                                       %
@@ -103,6 +103,11 @@ Demonstrou ser a função mais difícil de realizar devido a complexidade dos re
 \begin{itemize}
     \item Caso o utilizador escolha o \textbf{FCFS}, o \textbf{QUANTUM} irá ter um valor de \textbf{999}, assim nunca irá obrigar o programa a passar para o estado \textbf{READY}.
     \item Caso o utilizador escolha o \textbf{Round Robin}, o programa irá correr com o \text{Quantum} definido no código (\verb|#define QUANTUM_RR|).
+\end{itemize}
+\par Exemplos:
+\begin{itemize}
+    \item \verb|./.compiled --fcfs input1.txt| irá executar o \textbf{Simulador de Escalonamento} utilizando o algoritmo \textbf{FCFS} com o \verb|input1.txt|
+    \item \verb|./.compiled --rr input1.txt| irá executar o \textbf{Simulador de Escalonamento} utilizando o algoritmo \textbf{Round Robin} com o \verb|input1.txt|
 \end{itemize}
 % ----------\item ---------------------------------------------------------------------------------
 \section{Análise de Resultados} % Conclusão
