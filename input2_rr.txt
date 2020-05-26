@@ -1,8 +1,0 @@
-100 -> run: 4 6 6
-       blocked: 1 2
-101 -> run: 3 7
-       blocked: 1 
-200 -> run: 5 6 5
-       blocked: 2 2
-300 -> run: 6 5
-       blocked: 1
